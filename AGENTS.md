@@ -128,3 +128,69 @@ to **Section 10: Challenges** in the lesson plan.
   experiment by creating new files or copying it.
 - **Do not skip the basics.** Even if they say "I already know
   what a variable is," a quick review never hurts.
+
+---
+
+## Reference: Fresh Windows Machine Setup
+
+For students joining on a Windows machine that has never had dev
+tools installed, the session host (instructor) should distribute and
+run the following script **before** the session starts.
+
+### All-in-one winget setup script
+
+Save the following as `setup_dev_tools.bat` and run it **as
+Administrator** (right-click → Run as administrator):
+
+```bat
+@echo off
+echo Installing Python 3...
+winget install --id Python.Python.3 --accept-package-agreements --accept-source-agreements
+
+echo Installing Git...
+winget install --id Git.Git --accept-package-agreements --accept-source-agreements
+
+echo Installing VS Code...
+winget install --id Microsoft.VisualStudioCode --accept-package-agreements --accept-source-agreements
+
+echo.
+echo Done! Close this window and open a NEW terminal for changes to take effect.
+pause
+```
+
+> **Why Administrator?** `winget` installs machine-wide, so it needs
+> admin rights. Run this once before the session so everything is
+> ready when students arrive.
+
+### What each tool is for
+
+| Tool | Why we need it |
+|------|----------------|
+| **Python 3** | Runs the Number Guesser game and any extensions |
+| **Git** | Version control — create branches, commit, push to GitHub |
+| **Git Bash** | Comes with Git — provides a Unix-style terminal on Windows |
+| **VS Code** | A beginner-friendly code editor with syntax highlighting |
+
+### After running the script
+
+1. **Restart the terminal** (or open a new one) so the new `PATH`
+   entries are picked up.
+2. Verify each tool:
+   ```bash
+   python --version
+   git --version
+   code --version
+   ```
+3. Have students **log into VS Code with their GitHub account**
+   so they can push branches and open PRs from within the editor.
+
+### Notes
+
+- If `winget` is not available (very old Windows builds), download
+  installers from the official sites instead:
+  - python.org
+  - git-scm.com
+  - code.visualstudio.com
+- **Git Bash** is installed automatically as part of Git for Windows.
+  Students can right-click in any folder and select "Git Bash Here"
+  to open a terminal ready to run git commands.
