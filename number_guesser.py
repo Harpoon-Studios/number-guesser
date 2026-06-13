@@ -138,7 +138,7 @@ def play_round() -> None:
 
         if result == "correct":
             print(f"\nYou got it in {attempts} attempt{'s' if attempts != 1 else ''}!")
-            return  # Exit this function early — we're done
+            return True # Exit this function early — we're done
 
         # --- LESSON 15: Remaining attempts ---
         # Let the player know how many tries they have left.
@@ -151,6 +151,7 @@ def play_round() -> None:
     # If we exit the while loop without returning, the player lost.
 
     print(f"\nOut of attempts! The number was {secret_number}.")
+    return False
 
 
 # ----------------------------------------------------------------------
@@ -176,9 +177,21 @@ if __name__ == "__main__":
     # --- LESSON 19: The replay loop ---
     # We use a while loop that runs forever (while True) and break
     # out of it when the player doesn't want to play again.
+    win_streak = 0
 
     while True:
-        play_round()
+        if win_streak > 0:
+            print(f"\n- you are on a {win_streak}-game win streak!")
+        result = play_round()
+        if result:
+            win_streak += 1
+            if win_streak == 5:
+                print("  *** 5 in a row! You're on fire!")
+            elif win_streak == 10:
+                print("  <<< 10-game streak! Are you a mind reader?")
+        else:
+            print("Awww, streak broken!")
+            win_streak = 0
 
         # Ask if they want to play again
         play_again = input("\nPlay again? (y/n): ").strip().lower()
